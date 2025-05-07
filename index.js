@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import path from 'path';
+import sharp from 'sharp';
+import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,14 +26,14 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const ext = path.extname(file.originalname);
-        const customName = `image${ext}`; // Custom name for the file
+        const customName = file.originalname; // Custom name for the file
         cb(null, customName);
     }
   });
 
 // File filter to accept only PNG files
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/png') {
+    if (file.mimetype.startsWith('image/')) {
       cb(null, true); // Accept PNG files
     } else {
       cb(null, false); // Reject non-PNG files
@@ -58,15 +60,33 @@ app.get('/view-post', (req, res) => {
     res.render('view-post', { title: title, content: content, imagePath: imagePath, writerName: writerName });
 });
 
-app.post('/submit', upload.single('image'), (req, res) => {
+app.post('/submit', upload.single('image'), async (req, res) => {
     if (!req.file) {
-        return res.render('index', { success: false, error: 'Please upload a PNG image.' });
+        return res.render('index', { success: false, error: 'Please upload an image.' });
     }
-    imagePath = `/uploads/image.png`; // Store the path to the uploaded image
-    title = req.body.title;
-    content = req.body.content;
-    writerName = req.body.writerName;
-    res.render('index', { success: true, error: null});
+    const uploadedPath = req.file.path;
+    const pngPath = path.join('public/uploads', 'image.png');
+
+    try {
+        await sharp(uploadedPath)
+        .png()
+        .toFile(pngPath);
+
+        // Optionally delete original file if not PNG
+        if (path.extname(uploadedPath).toLowerCase() !== '.png') {
+        fs.unlinkSync(uploadedPath);
+        }
+        // const ext = path.extname(file.originalname);
+        imagePath = `/uploads/image.png`; // Store the path to the uploaded image
+        title = req.body.title;
+        content = req.body.content;
+        writerName = req.body.writerName;
+        res.render('index', { success: true, error: null});
+        
+    } catch (conversionErr) {
+        console.error('Image conversion error:', conversionErr);
+        res.render('index', { success: false, error: 'Image conversion failed.' });
+    }
 });
 
 
