@@ -44,6 +44,10 @@ app.get('/', (req, res) => {
     res.render('index', { success: false, error: null });
     }  );
 
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
 app.get('/view-post', (req, res) => {
     res.render('view-post', { title: title, content: content, imagePath: imagePath, writerName: writerName });
 });
