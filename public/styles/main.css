@@ -22,6 +22,7 @@ body {
     background-color: #d9b285;
     padding: 10px;
     text-align: center;
+    position: fixed;
 }
 
 .nav-item-det {
