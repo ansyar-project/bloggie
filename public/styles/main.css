@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding-bottom: 60px;
     background-color: #25160f;
     height: 100%;
 }
@@ -55,6 +55,7 @@ h1 {
     align-items: center;
     height: 100vh;
     align-items: left; */
+    height: 100%;
     width: 100%;
 }
 
