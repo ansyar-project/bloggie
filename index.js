@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 let title = '';
 let content = '';
+let writerName = '';
 let imagePath = '';
 
 // Set up multer
@@ -44,7 +45,7 @@ app.get('/', (req, res) => {
     }  );
 
 app.get('/view-post', (req, res) => {
-    res.render('view-post', { title: title, content: content, imagePath: imagePath });
+    res.render('view-post', { title: title, content: content, imagePath: imagePath, writerName: writerName });
 });
 
 app.post('/submit', upload.single('image'), (req, res) => {
@@ -54,6 +55,7 @@ app.post('/submit', upload.single('image'), (req, res) => {
     imagePath = `/uploads/image.png`; // Store the path to the uploaded image
     title = req.body.title;
     content = req.body.content;
+    writerName = req.body.writerName;
     res.render('index', { success: true, error: null});
 });
 

@@ -26,6 +26,10 @@
     <div class="container">
         <form id="blogForm" action="/submit" method="POST" class="mt-4" enctype="multipart/form-data">
             <div class="mb-3">
+                <label for="writerName" class="form-label">Your writer name</label>
+                <input type="text" class="form-control" id="writerName" name="writerName" required placeholder="Your writer name">
+            </div>
+            <div class="mb-3">
                 <label for="title" class="form-label">Blog Title</label>
                 <input type="text" class="form-control" id="title" name="title" required placeholder="My Blog Title">
             </div>
