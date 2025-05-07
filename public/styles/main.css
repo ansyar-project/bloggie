@@ -16,7 +16,9 @@ body {
     /* position: absolute;
     bottom: 0; */
     width: 100%;
-    /* height: 60px; */
+    height: 60px;
+    font-family: "Tagesschrift", system-ui;
+    font-style: normal;
 }
 
 .navbar {
