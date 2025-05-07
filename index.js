@@ -11,6 +11,12 @@ let content = '';
 let writerName = '';
 let imagePath = '';
 
+setInterval(() => {
+    title = '';
+    content = '';
+    console.log('Title and content reset');
+  }, 5 * 60 * 1000); // 1 minutes
+
 // Set up multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

@@ -65,8 +65,8 @@ h1 {
     flex: 1;
     /* height: 100%; */
     width: 100%;
-    margin-bottom: 20px;
-    padding-bottom: 60px;
+    margin-bottom: 30px;
+    /* padding-bottom: 60px; */
 }
 
 .form-label{
